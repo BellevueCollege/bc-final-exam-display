@@ -4,7 +4,7 @@ Plugin Name: Final Exam Display Shortcode
 Plugin URI: https://github.com/BellevueCollege/
 Description: Uses shortcode to display final exam schedules
 Author: Bellevue College Integration Team
-Version: 0.0.0.1
+Version: 1
 Author URI: http://www.bellevuecollege.edu
 GitHub Plugin URI: BellevueCollege/bc-final-exam-display
 Text Domain: bcfinalexam
