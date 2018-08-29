@@ -4,7 +4,7 @@ Plugin Name: Final Exam Display Shortcode
 Plugin URI: https://github.com/BellevueCollege/
 Description: Uses shortcode to display final exam schedules
 Author: Bellevue College Integration Team
-Version: 1.0.1
+Version: 1.2
 Author URI: http://www.bellevuecollege.edu
 GitHub Plugin URI: BellevueCollege/bc-final-exam-display
 Text Domain: bcfinalexam
@@ -17,8 +17,8 @@ function bcfinalexam_shortcode( $sc_config ) {
 		'day2'         => '',
 		'day3'         => '',
 		'quarter'      => null,
-		'first_label'  => '<strong>Daily</strong> or <strong>Mon/Wed</strong> or <strong>Mon/Wed/Fri</strong>',
-		'second_label' => '<strong>Tues/Thurs</strong> or <strong>Tues/Thurs/Fri</strong>',
+		'first_label'  => '<strong>Daily</strong>, or <strong>Monday and Wednesday</strong>, or <strong>Monday, Wednesday and Friday</strong>, or <strong>Monday</strong> only, or <strong>Wednesday</strong> only',
+		'second_label' => '<strong>Tuesday and Thursday</strong>, or <strong>Tuesday, Thursday and Friday</strong>, or <strong>Tuesday</strong> only, or <strong>Thursday</strong> only, or <strong>Friday</strong> only',
 	), $sc_config, 'bcfinalexam_shortcode' );
 
 	// Generate random string to use for anchor if quarter is not defined
@@ -35,7 +35,7 @@ function bcfinalexam_shortcode( $sc_config ) {
 	return <<<HTML
 <div class="panel panel-primary">
 	<div class="panel-heading">
-		<h3 class="panel-title">If your class meets {$first_table_label} only</h3>
+		<h3 class="panel-title">If your class meets {$first_table_label}</h3>
 	</div>
 	<div class="table-responsive final-exam-table">
 		<table class="table table-striped ">
@@ -87,7 +87,7 @@ function bcfinalexam_shortcode( $sc_config ) {
 					<td>1:30-3:20 p.m.</td>
 				</tr>
 				<tr>
-					<td>2:30 or 3:00 p.m.</td>
+					<td>2:30 or 3 p.m.</td>
 					<td>{$sc_config['day3']}</td>
 					<td>1:30-3:20 p.m.</td>
 				</tr>
@@ -110,7 +110,7 @@ function bcfinalexam_shortcode( $sc_config ) {
 
 <div class="panel panel-primary">
 	<div class="panel-heading">
-		<h3 class="panel-title">If your class meets {$second_table_label} only</h3>
+		<h3 class="panel-title">If your class meets {$second_table_label}</h3>
 	</div>
 	<div class="table-responsive final-exam-table">
 		<table class="table table-striped">
