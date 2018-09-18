@@ -1,0 +1,24 @@
+{
+  "name": "bc-final-exam-display",
+  "version": "1.2.0",
+  "private": true,
+  "description": "Shortcode and Gutenberg block to display final exam schedules",
+  "scripts": {
+    "start": "cgb-scripts start",
+    "build": "cgb-scripts build",
+    "eject": "cgb-scripts eject"
+  },
+  "dependencies": {
+    "cgb-scripts": "1.9.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BellevueCollege/bc-final-exam-display.git"
+  },
+  "author": "Bellevue College Integration Team",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/BellevueCollege/bc-final-exam-display/issues"
+  },
+  "homepage": "https://github.com/BellevueCollege/bc-final-exam-display#readme"
+}
