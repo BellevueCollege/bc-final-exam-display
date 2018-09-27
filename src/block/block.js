@@ -1,13 +1,28 @@
 /**
- * BLOCK: bc-final-exam
+ * BLOCK: bc-final-exam-display
  *
  * Registering a basic block with Gutenberg.
  * Simple block, renders and saves the same content without any interactivity.
  */
 
-//  Import CSS.
+// Import CSS.
 import './style.scss';
 import './editor.scss';
+
+// Import Components
+const {
+	InspectorControls,
+} = wp.editor;
+
+const {
+	Button,
+	DatePicker,
+	PanelBody,
+	SelectControl,
+	TextareaControl,
+} = wp.components;
+
+const dateFormat = require('dateformat'); //import dateFormat to format dates
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
@@ -33,6 +48,31 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 	keywords: [
 		__( 'bc-final-exam-display' ),
 	],
+	
+	// Name attributes to manage the state of data
+	attributes: {
+		day1: {
+			type: 'string',
+		},
+		day2: {
+			type: 'string'
+		},
+		day3: {
+			type: 'string'
+		},
+		first_label: {
+			type: 'string',
+			default: '<strong>Daily</strong>, or <strong>Monday and Wednesday</strong>, or <strong>Monday, Wednesday and Friday</strong>, or <strong>Monday</strong> only, or <strong>Wednesday</strong> only'
+		},
+		second_label: {
+			type: 'string',
+			default: '<strong>Tuesday and Thursday</strong>, or <strong>Tuesday, Thursday and Friday</strong>, or <strong>Tuesday</strong> only, or <strong>Thursday</strong> only, or <strong>Friday</strong> only'
+		},
+		quarter: {
+			type: 'string',
+			default: 'spring'
+		}
+	},
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -43,23 +83,216 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: function( props ) {
-		// Creates a <p class='wp-block-bcfed-block-bc-final-exam-display'></p>.
-		return (
+		const { attributes: { day1, day2, day3, first_label, second_label, quarter }, setAttributes } = props;
+		const resetLabelsToDefault = ( ) => {
+			setAttributes( { first_label: '<strong>Daily</strong>, or <strong>Monday and Wednesday</strong>, or <strong>Monday, Wednesday and Friday</strong>, or <strong>Monday</strong> only, or <strong>Wednesday</strong> only' } );
+			setAttributes( { second_label: '<strong>Tuesday and Thursday</strong>, or <strong>Tuesday, Thursday and Friday</strong>, or <strong>Tuesday</strong> only, or <strong>Thursday</strong> only, or <strong>Friday</strong> only' } );
+		}
+	
+		const day1Formatted = dateFormat(day1,"dddd, m/d");
+		const day2Formatted = dateFormat(day2,"dddd, m/d");
+		const day3Formatted = dateFormat(day3,"dddd, m/d");
+
+		return [
+				<InspectorControls key = "inspector">
+					<PanelBody title = { __( 'Change Quarter' ) } >
+						<SelectControl
+							label = "Select Quarter"
+							value = { quarter }
+							options = { [
+								{ label: 'Spring', value: 'spring' },
+								{ label: 'Summer', value: 'summer' },
+								{ label: 'Fall', value: 'fall' },
+								{ label: 'Winter', value: 'winter' }
+							] }
+							onChange = { ( newQuarter ) => { setAttributes( { quarter: newQuarter } ); } }
+						/>
+					</PanelBody>
+					<PanelBody title = { __( 'Change Final Exam Day One' ) } >
+						<DatePicker
+							currentDate = { day1 }
+							onChange = { ( newDate ) => {
+								setAttributes( { day1: newDate } );
+							} }
+						/>
+					</PanelBody>
+					<PanelBody title = { __( 'Change Final Exam Day Two' ) } >
+						<DatePicker
+							currentDate = { day2 }
+							onChange = { ( newDate ) => {
+								setAttributes( { day2: newDate } );
+							} }
+						/>
+					</PanelBody>
+					<PanelBody title = { __( 'Change Final Exam Day Three' ) } >
+						<DatePicker
+							currentDate = { day3 }
+							onChange = { ( newDate ) => {
+								setAttributes( { day3: newDate } );
+							} }
+						/>
+					</PanelBody>
+					<PanelBody title = { __( 'Change Table Labels' ) } >
+						<TextareaControl
+							label = "First Label"
+							value = { first_label }
+							onChange = { ( newText ) => {
+								setAttributes( { first_label: newText } );
+							} }
+						/>
+						<TextareaControl
+							label = "Second Label"
+							value = { second_label }
+							onChange = { ( newText ) => {
+								setAttributes( { second_label: newText } );
+							} }
+						/>
+						<Button 
+							isDefault 
+							onClick = { resetLabelsToDefault }>
+							Reset to Default
+						</Button>
+					</PanelBody>
+				</InspectorControls>
+			,
+			// Creates a <p class='wp-block-bcfed-block-bc-final-exam-display'></p>.
 			<div className={ props.className }>
-				<p>— Hello from the backend.</p>
-				<p>
-					CGB BLOCK: <code>bc-final-exam-display</code> is a new Gutenberg block
-				</p>
-				<p>
-					It was created via{ ' ' }
-					<code>
-						<a href="https://github.com/ahmadawais/create-guten-block">
-							create-guten-block
-						</a>
-					</code>.
-				</p>
-			</div>
-		);
+
+				<div class="final-exam-help-box">
+					<h3>BC Final Exam Display</h3>
+					<p>Choose the dates for the final exams via the settings on the right, or by clicking the gear icon and selecting the block.</p>
+					<p>Calendar day 1 is: <span class="final-exam-day">{ day1Formatted ? day1Formatted : 'No Calendar Date Chosen' }</span></p>
+					<p>Calendar day 2 is: <span class="final-exam-day">{ day2Formatted ? day2Formatted : 'No Calendar Date Chosen' }</span></p>
+					<p>Calendar day 3 is: <span class="final-exam-day">{ day3Formatted ? day3Formatted : 'No Calendar Date Chosen' }</span></p>
+					<p><span class="final-exam-info">!</span>This message will not appear on the site.</p>
+				</div>
+
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">If your class meets <span dangerouslySetInnerHTML={{__html: first_label }}></span></h3>
+					</div>
+					<div class="table-responsive final-exam-table">
+						<table class="table table-striped ">
+							<thead>
+								<tr>
+									<th class="first-col">Class Time</th>
+									<th class="second-col">Exam Day</th>
+									<th class="third-col">Exam Time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>6:30 a.m.</td>
+									<td colspan="2"><a href={'#' + quarter}>See note below</a></td>
+								</tr>
+								<tr>
+									<td>7:30 a.m.</td>
+									<td>{day1Formatted}</td>
+									<td>7:30-9:20 a.m.</td>
+								</tr>
+								<tr>
+									<td>8:30 a.m.</td>
+									<td>{day3Formatted}</td>
+									<td>7:30-9:20 a.m.</td>
+								</tr>
+								<tr>
+									<td>9:30 a.m.</td>
+									<td>{day1Formatted}</td>
+									<td>9:30-11:20 a.m.</td>
+								</tr>
+								<tr>
+									<td>10:30 a.m.</td>
+									<td>{day3Formatted}</td>
+									<td>9:30-11:20 a.m.</td>
+								</tr>
+								<tr>
+									<td>11:30 a.m.</td>
+									<td>{day1Formatted}</td>
+									<td>11:30 a.m.-1:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>12:30 p.m.</td>
+									<td>{day3Formatted}</td>
+									<td>11:30 a.m.-1:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>1:30 p.m.</td>
+									<td>{day1Formatted}</td>
+									<td>1:30-3:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>2:30 or 3 p.m.</td>
+									<td>{day3Formatted}</td>
+									<td>1:30-3:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>3:30 p.m.</td>
+									<td>{day1Formatted}</td>
+									<td>3:30-5:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>4:30 p.m.</td>
+									<td>{day3Formatted}</td>
+									<td>3:30-5:20 p.m.</td>
+								</tr>
+
+							</tbody>
+
+						</table>
+					</div>
+				</div> {/*end panel panel-primary */} 
+
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">If your class meets <span dangerouslySetInnerHTML={{__html: second_label }}></span></h3>
+					</div>
+					<div class="table-responsive final-exam-table">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th class="first-col">Class Time</th>
+									<th class="second-col">Exam Day</th>
+									<th class="third-col">Exam Time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>7:30 or 8:30 a.m.</td>
+									<td>{day2Formatted}</td>
+									<td>7:30-9:20 a.m.</td>
+								</tr>
+								<tr>
+									<td>9:30 or 10:30 a.m.</td>
+									<td>{day2Formatted}</td>
+									<td>9:30-11:20 a.m.</td>
+								</tr>
+								<tr>
+									<td>11:30 a.m. or 12:30 p.m.</td>
+									<td>{day2Formatted}</td>
+									<td>11:30 a.m.-1:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>1:30 or 2:30 p.m.</td>
+									<td>{day2Formatted}</td>
+									<td>1:30-3:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>3:00, 3:30 or 4:30 p.m.</td>
+									<td>{day2Formatted}</td>
+									<td>3:30-5:20 p.m.</td>
+								</tr>
+
+							</tbody>
+
+						</table>
+					</div>
+				</div> {/*end panel panel-primary */} 
+
+				<h3 id={quarter}>6:30 a.m. and Evening Classes at Main Campus</h3>
+				<p>Final exams for 6:30 a.m. and Evening credit classes at Main Campus will take place during regular class hours during finals week unless otherwise arranged with the approval of the Office of Instruction.</p>
+
+			</div>// end wp-block-bcfed-block-bc-final-exam-display
+		];
 	},
 
 	/**
@@ -71,21 +304,138 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	save: function( props ) {
-		return (
-			<div>
-				<p>— Hello from the frontend.</p>
-				<p>
-					CGB BLOCK: <code>bc-final-exam-display</code> is a new Gutenberg block.
-				</p>
-				<p>
-					It was created via{ ' ' }
-					<code>
-						<a href="https://github.com/ahmadawais/create-guten-block">
-							create-guten-block
-						</a>
-					</code>.
-				</p>
+		const { attributes: { day1, day2, day3, first_label, second_label, quarter } } = props;
+		const day1Formatted = dateFormat(day1,"dddd, m/d");
+		const day2Formatted = dateFormat(day2,"dddd, m/d");
+		const day3Formatted = dateFormat(day3,"dddd, m/d");
+
+        return (
+            <div>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">If your class meets <span dangerouslySetInnerHTML={{__html: first_label }}></span></h3>
+					</div>
+					<div class="table-responsive final-exam-table">
+						<table class="table table-striped ">
+							<thead>
+								<tr>
+									<th class="first-col">Class Time</th>
+									<th class="second-col">Exam Day</th>
+									<th class="third-col">Exam Time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>6:30 a.m.</td>
+									<td colspan="2"><a href={'#' + quarter}>See note below</a></td>
+								</tr>
+								<tr>
+									<td>7:30 a.m.</td>
+									<td>{day1Formatted}</td>
+									<td>7:30-9:20 a.m.</td>
+								</tr>
+								<tr>
+									<td>8:30 a.m.</td>
+									<td>{day3Formatted}</td>
+									<td>7:30-9:20 a.m.</td>
+								</tr>
+								<tr>
+									<td>9:30 a.m.</td>
+									<td>{day1Formatted}</td>
+									<td>9:30-11:20 a.m.</td>
+								</tr>
+								<tr>
+									<td>10:30 a.m.</td>
+									<td>{day3Formatted}</td>
+									<td>9:30-11:20 a.m.</td>
+								</tr>
+								<tr>
+									<td>11:30 a.m.</td>
+									<td>{day1Formatted}</td>
+									<td>11:30 a.m.-1:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>12:30 p.m.</td>
+									<td>{day3Formatted}</td>
+									<td>11:30 a.m.-1:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>1:30 p.m.</td>
+									<td>{day1Formatted}</td>
+									<td>1:30-3:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>2:30 or 3 p.m.</td>
+									<td>{day3Formatted}</td>
+									<td>1:30-3:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>3:30 p.m.</td>
+									<td>{day1Formatted}</td>
+									<td>3:30-5:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>4:30 p.m.</td>
+									<td>{day3Formatted}</td>
+									<td>3:30-5:20 p.m.</td>
+								</tr>
+
+							</tbody>
+
+						</table>
+					</div>
+				</div> {/*end panel panel-primary */} 
+
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+					<h3 class="panel-title">If your class meets <span dangerouslySetInnerHTML={{__html: second_label }}></span></h3>
+					</div>
+					<div class="table-responsive final-exam-table">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th class="first-col">Class Time</th>
+									<th class="second-col">Exam Day</th>
+									<th class="third-col">Exam Time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>7:30 or 8:30 a.m.</td>
+									<td>{day2Formatted}</td>
+									<td>7:30-9:20 a.m.</td>
+								</tr>
+								<tr>
+									<td>9:30 or 10:30 a.m.</td>
+									<td>{day2Formatted}</td>
+									<td>9:30-11:20 a.m.</td>
+								</tr>
+								<tr>
+									<td>11:30 a.m. or 12:30 p.m.</td>
+									<td>{day2Formatted}</td>
+									<td>11:30 a.m.-1:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>1:30 or 2:30 p.m.</td>
+									<td>{day2Formatted}</td>
+									<td>1:30-3:20 p.m.</td>
+								</tr>
+								<tr>
+									<td>3:00, 3:30 or 4:30 p.m.</td>
+									<td>{day2Formatted}</td>
+									<td>3:30-5:20 p.m.</td>
+								</tr>
+
+							</tbody>
+
+						</table>
+					</div>
+				</div> {/*end panel panel-primary */} 
+
+				<h3 id={quarter}>6:30 a.m. and Evening Classes at Main Campus</h3>
+				<p>Final exams for 6:30 a.m. and Evening credit classes at Main Campus will take place during regular class hours during finals week unless otherwise arranged with the approval of the Office of Instruction.</p>
+        
 			</div>
-		);
+        );
 	},
 } );

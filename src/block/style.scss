@@ -5,10 +5,19 @@
  */
 
 .wp-block-bcfed-block-bc-final-exam-display  {
-  background: $red;
-  border: 0.2rem solid $black;
-  color: $black;
-  margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem;
+  // background: $red;
+  // border: 0.2rem solid $black;
+  // color: $black;
+  // margin: 0 auto;
+  // max-width: 740px;
+  // padding: 2rem;
+}
+
+.final-exam-table .first-col {
+  width: 40%;
+}
+
+.final-exam-table .second-col,
+.final-exam-table .third-col {
+  width: 30%;
 }

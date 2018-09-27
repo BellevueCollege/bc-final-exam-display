@@ -9,7 +9,8 @@
     "eject": "cgb-scripts eject"
   },
   "dependencies": {
-    "cgb-scripts": "1.9.8"
+    "cgb-scripts": "1.9.8",
+    "dateformat": "^3.0.3"
   },
   "repository": {
     "type": "git",
