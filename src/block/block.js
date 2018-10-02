@@ -53,12 +53,15 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 	attributes: {
 		day1: {
 			type: 'string',
+			default: ''
 		},
 		day2: {
-			type: 'string'
+			type: 'string',
+			default: ''
 		},
 		day3: {
-			type: 'string'
+			type: 'string',
+			default: ''
 		},
 		first_label: {
 			type: 'string',
@@ -72,6 +75,56 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 			type: 'string',
 			default: 'spring'
 		}
+	},
+
+	//Existing final exam display shortcode transformed into its block counterpart.
+	transforms: {
+		from: [
+			{
+				type: 'shortcode',
+				// Shortcode tag can also be an array of shortcode aliases
+				tag: 'bc-final-exams',
+				attributes: {
+					day1: {
+						type: 'string',
+						shortcode: ( { named: { day1 } } ) => {
+							return day1;
+						},
+					},
+					day2: {
+						type: 'string',
+						shortcode: ( { named: { day2 } } ) => {
+							return day2;
+						},
+					},
+					day3: {
+						type: 'string',
+						shortcode: ( { named: { day3 } } ) => {
+							return day3;
+						},
+					},
+					first_label: {
+						type: 'string',
+						shortcode: ( { named: { first_label } } ) => {
+							return first_label;
+						},
+					},
+					second_label: {
+						type: 'string',
+						shortcode: ( { named: { second_label } } ) => {
+							return second_label;
+						},
+
+					},
+					quarter: {
+						type: 'string',
+						shortcode: ( { named: { quarter } } ) => {
+							return quarter;
+						},
+					}
+				},
+			},
+		]
 	},
 
 	/**
@@ -89,9 +142,9 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 			setAttributes( { second_label: '<strong>Tuesday and Thursday</strong>, or <strong>Tuesday, Thursday and Friday</strong>, or <strong>Tuesday</strong> only, or <strong>Thursday</strong> only, or <strong>Friday</strong> only' } );
 		}
 	
-		const day1Formatted = dateFormat(day1,"dddd, m/d");
-		const day2Formatted = dateFormat(day2,"dddd, m/d");
-		const day3Formatted = dateFormat(day3,"dddd, m/d");
+		const day1Formatted = (day1 != '' ? dateFormat(day1,"dddd, m/d") : 'Choose Date');
+		const day2Formatted = (day2 != '' ? dateFormat(day2,"dddd, m/d") : 'Choose Date');
+		const day3Formatted = (day3 != '' ? dateFormat(day3,"dddd, m/d") : 'Choose Date');
 
 		return [
 				<InspectorControls key = "inspector">
@@ -161,9 +214,9 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 				<div class="final-exam-help-box">
 					<h3>BC Final Exam Display</h3>
 					<p>Choose the dates for the final exams via the settings on the right, or by clicking the gear icon and selecting the block.</p>
-					<p>Calendar day 1 is: <span class="final-exam-day">{ day1Formatted ? day1Formatted : 'No Calendar Date Chosen' }</span></p>
-					<p>Calendar day 2 is: <span class="final-exam-day">{ day2Formatted ? day2Formatted : 'No Calendar Date Chosen' }</span></p>
-					<p>Calendar day 3 is: <span class="final-exam-day">{ day3Formatted ? day3Formatted : 'No Calendar Date Chosen' }</span></p>
+					<p>Calendar day 1 is: <span class="final-exam-day">{ day1Formatted }</span></p>
+					<p>Calendar day 2 is: <span class="final-exam-day">{ day2Formatted }</span></p>
+					<p>Calendar day 3 is: <span class="final-exam-day">{ day3Formatted }</span></p>
 					<p><span class="final-exam-info">!</span>This message will not appear on the site.</p>
 				</div>
 
@@ -305,6 +358,7 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 	 */
 	save: function( props ) {
 		const { attributes: { day1, day2, day3, first_label, second_label, quarter } } = props;
+
 		const day1Formatted = dateFormat(day1,"dddd, m/d");
 		const day2Formatted = dateFormat(day2,"dddd, m/d");
 		const day3Formatted = dateFormat(day3,"dddd, m/d");
@@ -434,7 +488,7 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 
 				<h3 id={quarter}>6:30 a.m. and Evening Classes at Main Campus</h3>
 				<p>Final exams for 6:30 a.m. and Evening credit classes at Main Campus will take place during regular class hours during finals week unless otherwise arranged with the approval of the Office of Instruction.</p>
-        
+
 			</div>
         );
 	},
