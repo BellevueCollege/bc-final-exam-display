@@ -11,6 +11,7 @@ import './editor.scss';
 
 // Import Components
 const {
+	RichText,
 	InspectorControls,
 } = wp.editor;
 
@@ -19,7 +20,6 @@ const {
 	DatePicker,
 	PanelBody,
 	SelectControl,
-	TextareaControl,
 } = wp.components;
 
 const dateFormat = require('dateformat'); //import dateFormat to format dates
@@ -65,11 +65,11 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 		},
 		first_label: {
 			type: 'string',
-			default: '<strong>Daily</strong>, or <strong>Monday and Wednesday</strong>, or <strong>Monday, Wednesday and Friday</strong>, or <strong>Monday</strong> only, or <strong>Wednesday</strong> only'
+			default: (<span>If your class meets <strong>Daily</strong>, or <strong>Monday and Wednesday</strong>, or <strong>Monday, Wednesday and Friday</strong>, or <strong>Monday</strong> only, or <strong>Wednesday</strong> only</span>)
 		},
 		second_label: {
 			type: 'string',
-			default: '<strong>Tuesday and Thursday</strong>, or <strong>Tuesday, Thursday and Friday</strong>, or <strong>Tuesday</strong> only, or <strong>Thursday</strong> only, or <strong>Friday</strong> only'
+			default: (<span>If your class meets <strong>Tuesday and Thursday</strong>, or <strong>Tuesday, Thursday and Friday</strong>, or <strong>Tuesday</strong> only, or <strong>Thursday</strong> only, or <strong>Friday</strong> only</span>)
 		},
 		quarter: {
 			type: 'string',
@@ -78,11 +78,11 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 	},
 
 	//Existing final exam display shortcode transformed into its block counterpart.
+	//Allows use of [bc-final-exams]
 	transforms: {
 		from: [
 			{
 				type: 'shortcode',
-				// Shortcode tag can also be an array of shortcode aliases
 				tag: 'bc-final-exams',
 				attributes: {
 					day1: {
@@ -137,18 +137,34 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 	 */
 	edit: function( props ) {
 		const { attributes: { day1, day2, day3, first_label, second_label, quarter }, setAttributes } = props;
-		const resetLabelsToDefault = ( ) => {
-			setAttributes( { first_label: '<strong>Daily</strong>, or <strong>Monday and Wednesday</strong>, or <strong>Monday, Wednesday and Friday</strong>, or <strong>Monday</strong> only, or <strong>Wednesday</strong> only' } );
-			setAttributes( { second_label: '<strong>Tuesday and Thursday</strong>, or <strong>Tuesday, Thursday and Friday</strong>, or <strong>Tuesday</strong> only, or <strong>Thursday</strong> only, or <strong>Friday</strong> only' } );
+
+		const resetFirstLabelToDefault = ( ) => {
+			setAttributes( { first_label: (<span>If your class meets <strong>Daily</strong>, or <strong>Monday and Wednesday</strong>, or <strong>Monday, Wednesday and Friday</strong>, or <strong>Monday</strong> only, or <strong>Wednesday</strong> only</span>) } );
+		}
+		const resetSecondLabelToDefault = ( ) => {
+			setAttributes( { second_label: (<span>If your class meets <strong>Tuesday and Thursday</strong>, or <strong>Tuesday, Thursday and Friday</strong>, or <strong>Tuesday</strong> only, or <strong>Thursday</strong> only, or <strong>Friday</strong> only</span>) } );
 		}
 	
+		//If day is not blank, then output formatted date; if date is blank, then output 'Choose Date'
 		const day1Formatted = (day1 != '' ? dateFormat(day1,"dddd, m/d") : 'Choose Date');
 		const day2Formatted = (day2 != '' ? dateFormat(day2,"dddd, m/d") : 'Choose Date');
 		const day3Formatted = (day3 != '' ? dateFormat(day3,"dddd, m/d") : 'Choose Date');
 
+		let helpBox;
+		if (props.isSelected) {
+			helpBox = (<span><div class="final-exam-help-box">
+			<h3>BC Final Exam Display</h3>
+			<p>Choose the dates for the final exams via the settings on the right, or by clicking the gear icon and selecting the block.</p>
+			<p>Calendar day 1 is: <span class="final-exam-day">{ day1Formatted }</span></p>
+			<p>Calendar day 2 is: <span class="final-exam-day">{ day2Formatted }</span></p>
+			<p>Calendar day 3 is: <span class="final-exam-day">{ day3Formatted }</span></p>
+			<p><span class="final-exam-info">!</span>This message will not appear on the site.</p>
+			</div></span>);
+		}
+		
 		return [
 				<InspectorControls key = "inspector">
-					<PanelBody title = { __( 'Change Quarter' ) } >
+					<PanelBody title = { __( 'Change Quarter' ) }>
 						<SelectControl
 							label = "Select Quarter"
 							value = { quarter }
@@ -185,44 +201,37 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 							} }
 						/>
 					</PanelBody>
-					<PanelBody title = { __( 'Change Table Labels' ) } >
-						<TextareaControl
-							label = "First Label"
-							value = { first_label }
-							onChange = { ( newText ) => {
-								setAttributes( { first_label: newText } );
-							} }
-						/>
-						<TextareaControl
-							label = "Second Label"
-							value = { second_label }
-							onChange = { ( newText ) => {
-								setAttributes( { second_label: newText } );
-							} }
-						/>
-						<Button 
-							isDefault 
-							onClick = { resetLabelsToDefault }>
-							Reset to Default
-						</Button>
+					<PanelBody title = { __( 'Reset Table Labels' ) } >
+						<p>
+							<Button 
+								isDefault 
+								onClick = { resetFirstLabelToDefault }>
+								Reset First Label to Default
+							</Button>
+						</p>
+						<p>
+							<Button 
+								isDefault 
+								onClick = { resetSecondLabelToDefault }>
+								Reset Second Label to Default
+							</Button>
+						</p>
 					</PanelBody>
 				</InspectorControls>
 			,
 			// Creates a <p class='wp-block-bcfed-block-bc-final-exam-display'></p>.
 			<div className={ props.className }>
 
-				<div class="final-exam-help-box">
-					<h3>BC Final Exam Display</h3>
-					<p>Choose the dates for the final exams via the settings on the right, or by clicking the gear icon and selecting the block.</p>
-					<p>Calendar day 1 is: <span class="final-exam-day">{ day1Formatted }</span></p>
-					<p>Calendar day 2 is: <span class="final-exam-day">{ day2Formatted }</span></p>
-					<p>Calendar day 3 is: <span class="final-exam-day">{ day3Formatted }</span></p>
-					<p><span class="final-exam-info">!</span>This message will not appear on the site.</p>
-				</div>
+				{helpBox}
 
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">If your class meets <span dangerouslySetInnerHTML={{__html: first_label }}></span></h3>
+						<RichText
+							tagName="h3"
+							className="panel-title"
+							onChange = { (newContent) => { setAttributes({first_label: newContent})} }
+							value={first_label}
+						/>
 					</div>
 					<div class="table-responsive final-exam-table">
 						<table class="table table-striped ">
@@ -297,7 +306,12 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">If your class meets <span dangerouslySetInnerHTML={{__html: second_label }}></span></h3>
+						<RichText
+							tagName="h3"
+							className="panel-title"
+							onChange = { (newContent) => { setAttributes({second_label: newContent})} }
+							value={second_label}
+						/>
 					</div>
 					<div class="table-responsive final-exam-table">
 						<table class="table table-striped">
@@ -367,7 +381,11 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
             <div>
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">If your class meets <span dangerouslySetInnerHTML={{__html: first_label }}></span></h3>
+						<RichText.Content
+							tagName="h3"
+							className="panel-title"
+							value={first_label}
+						/>
 					</div>
 					<div class="table-responsive final-exam-table">
 						<table class="table table-striped ">
@@ -442,7 +460,11 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-					<h3 class="panel-title">If your class meets <span dangerouslySetInnerHTML={{__html: second_label }}></span></h3>
+						<RichText.Content
+							tagName="h3"
+							className="panel-title"
+							value={second_label}
+						/>
 					</div>
 					<div class="table-responsive final-exam-table">
 						<table class="table table-striped">
