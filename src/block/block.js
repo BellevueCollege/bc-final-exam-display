@@ -65,11 +65,11 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 		},
 		first_label: {
 			type: 'string',
-			default: (<span>If your class meets <strong>Daily</strong>, or <strong>Monday and Wednesday</strong>, or <strong>Monday, Wednesday and Friday</strong>, or <strong>Monday</strong> only, or <strong>Wednesday</strong> only</span>)
+			default: '<span>If your class meets <strong>Daily</strong>, or <strong>Monday and Wednesday</strong>, or <strong>Monday, Wednesday and Friday</strong>, or <strong>Monday</strong> only, or <strong>Wednesday</strong> only</span>'
 		},
 		second_label: {
 			type: 'string',
-			default: (<span>If your class meets <strong>Tuesday and Thursday</strong>, or <strong>Tuesday, Thursday and Friday</strong>, or <strong>Tuesday</strong> only, or <strong>Thursday</strong> only, or <strong>Friday</strong> only</span>)
+			default: '<span>If your class meets <strong>Tuesday and Thursday</strong>, or <strong>Tuesday, Thursday and Friday</strong>, or <strong>Tuesday</strong> only, or <strong>Thursday</strong> only, or <strong>Friday</strong> only</span>'
 		},
 		quarter: {
 			type: 'string',
@@ -145,10 +145,10 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 			setAttributes( { second_label: (<span>If your class meets <strong>Tuesday and Thursday</strong>, or <strong>Tuesday, Thursday and Friday</strong>, or <strong>Tuesday</strong> only, or <strong>Thursday</strong> only, or <strong>Friday</strong> only</span>) } );
 		}
 	
-		//If day is not blank, then output formatted date; if date is blank, then output 'Choose Date'
-		const day1Formatted = (day1 != '' ? dateFormat(day1,"dddd, m/d") : 'Choose Date');
-		const day2Formatted = (day2 != '' ? dateFormat(day2,"dddd, m/d") : 'Choose Date');
-		const day3Formatted = (day3 != '' ? dateFormat(day3,"dddd, m/d") : 'Choose Date');
+		//If day is not blank, then output formatted date; if date is blank, then output '[no date selected]'
+		const day1Formatted = (day1 != '' ? dateFormat(day1,"dddd, m/d") : '[no date selected]');
+		const day2Formatted = (day2 != '' ? dateFormat(day2,"dddd, m/d") : '[no date selected]');
+		const day3Formatted = (day3 != '' ? dateFormat(day3,"dddd, m/d") : '[no date selected]');
 
 		let helpBox;
 		if (props.isSelected) {
@@ -356,7 +356,7 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 				</div> {/*end panel panel-primary */} 
 
 				<h3 id={quarter}>6:30 a.m. and Evening Classes at Main Campus</h3>
-				<p>Final exams for 6:30 a.m. and Evening credit classes at Main Campus will take place during regular class hours during finals week unless otherwise arranged with the approval of the Office of Instruction.</p>
+				<p>Final exams for 6:30 a.m. and Evening credit classes at Main Campus will take place during regular class hours during finals week unless otherwise arranged with the approval of the Office of Academic Affairs.</p>
 
 			</div>// end wp-block-bcfed-block-bc-final-exam-display
 		];
@@ -509,7 +509,7 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 				</div> {/*end panel panel-primary */} 
 
 				<h3 id={quarter}>6:30 a.m. and Evening Classes at Main Campus</h3>
-				<p>Final exams for 6:30 a.m. and Evening credit classes at Main Campus will take place during regular class hours during finals week unless otherwise arranged with the approval of the Office of Instruction.</p>
+				<p>Final exams for 6:30 a.m. and Evening credit classes at Main Campus will take place during regular class hours during finals week unless otherwise arranged with the approval of the Office of Academic Affairs.</p>
 
 			</div>
         );

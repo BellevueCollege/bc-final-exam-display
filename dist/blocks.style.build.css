@@ -1,1 +1,17 @@
-.final-exam-table .first-col{width:40%}.final-exam-table .second-col,.final-exam-table .third-col{width:30%}
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+.final-exam-table .first-col {
+  width: 40%; }
+
+.final-exam-table .second-col,
+.final-exam-table .third-col {
+  width: 30%; }
