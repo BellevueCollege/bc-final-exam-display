@@ -4,7 +4,7 @@ Plugin Name: Final Exam Display Shortcode
 Plugin URI: https://github.com/BellevueCollege/
 Description: Uses shortcode to display final exam schedules
 Author: Bellevue College Integration Team
-Version: 1.2
+Version: 1.2.1 #{versionStamp}#
 Author URI: http://www.bellevuecollege.edu
 GitHub Plugin URI: BellevueCollege/bc-final-exam-display
 Text Domain: bcfinalexam
@@ -154,7 +154,7 @@ function bcfinalexam_shortcode( $sc_config ) {
 	</div>
 </div>
 <h3 id = "{$sc_config['quarter']}">6:30 a.m. and Evening Classes at Main Campus</h3>
-<p>Final exams for 6:30 a.m. and Evening credit classes at Main Campus will take place during regular class hours during finals week unless otherwise arranged with the approval of the Office of Instruction.</p>
+<p>Final exams for 6:30 a.m. and Evening credit classes at Main Campus will take place during regular class hours during finals week unless otherwise arranged with the approval of the Office of Academic Affairs.</p>
 HTML;
 }
 
