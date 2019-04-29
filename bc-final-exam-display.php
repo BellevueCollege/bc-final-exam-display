@@ -1,16 +1,18 @@
 <?php
 /*
-Plugin Name: Final Exam Display Shortcode
-Plugin URI: https://github.com/BellevueCollege/
-Description: Uses shortcode to display final exam schedules
+Plugin Name: BC Final Exam Display Shortcode & Gutenberg Block
+Plugin URI: https://github.com/BellevueCollege/bc-final-exam-display
+Description: Shortcode and Gutenberg block to display final exam schedules
 Author: Bellevue College Integration Team
-Version: 1.2.1 #{versionStamp}#
+Version: 2 #{versionStamp}#
 Author URI: http://www.bellevuecollege.edu
 GitHub Plugin URI: BellevueCollege/bc-final-exam-display
 Text Domain: bcfinalexam
 */
 
-// Shortcode
+/* **********
+ * Shortcode 
+ * **********/ 
 function bcfinalexam_shortcode( $sc_config ) {
 	$sc_config = shortcode_atts( array(
 		'day1'         => '',
@@ -166,3 +168,10 @@ function bcfinalexam_styles() {
 }
 
 add_action( 'wp_enqueue_scripts', 'bcfinalexam_styles' );
+
+/* **********
+ * Gutenberg - For Gutenberg Support
+ * **********/
+
+// Block Initializer
+require_once plugin_dir_path( __FILE__ ) . 'src/init.php';
