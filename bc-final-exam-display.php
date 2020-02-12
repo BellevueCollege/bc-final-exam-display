@@ -4,15 +4,15 @@ Plugin Name: BC Final Exam Display Shortcode & Gutenberg Block
 Plugin URI: https://github.com/BellevueCollege/bc-final-exam-display
 Description: Shortcode and Gutenberg block to display final exam schedules
 Author: Bellevue College Integration Team
-Version: 2 #{versionStamp}#
+Version: 2.1 #{versionStamp}#
 Author URI: http://www.bellevuecollege.edu
 GitHub Plugin URI: BellevueCollege/bc-final-exam-display
 Text Domain: bcfinalexam
 */
 
 /* **********
- * Shortcode 
- * **********/ 
+ * Shortcode
+ * **********/
 function bcfinalexam_shortcode( $sc_config ) {
 	$sc_config = shortcode_atts( array(
 		'day1'         => '',
