@@ -1,6 +1,6 @@
 {
   "name": "bc-final-exam-display",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "description": "Shortcode and Gutenberg block to display final exam schedules",
   "scripts": {
@@ -9,7 +9,7 @@
     "eject": "cgb-scripts eject"
   },
   "dependencies": {
-    "cgb-scripts": "^1.17.0",
+    "cgb-scripts": "^1.22.0",
     "dateformat": "^3.0.3"
   },
   "repository": {
