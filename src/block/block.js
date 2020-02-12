@@ -629,8 +629,6 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 								</table>
 							</div>
 						</div> {/*end panel panel-primary */}
-				</div> {/*end panel panel-primary */}
-						</div> {/*end panel panel-primary */}
 
 						<div class="panel panel-primary">
 							<div class="panel-heading">
@@ -680,8 +678,6 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 
 								</table>
 							</div>
-						</div> {/*end panel panel-primary */}
-				</div> {/*end panel panel-primary */}
 						</div> {/*end panel panel-primary */}
 
 						<h3 id={quarter}>6:30 a.m. and Evening Classes at Main Campus</h3>
