@@ -503,7 +503,7 @@ registerBlockType( 'bcfed/block-bc-final-exam-display', {
 				</div> {/*end panel panel-primary */}
 
 				<h3 id={quarter}>6:30 a.m. and Evening Classes at Main Campus</h3>
-				<p>Final exams for 6:30 a.m. and Evening credit classes (i.e. start time of 5:00 p.m. or later) at Main Campus will take place during regular class hours during finals week unless otherwise arranged with the approval of the Office of Academic Affairs.</p>
+				<p>Final exams for 6:30 a.m. and Evening credit classes (i.e. start time of 5:00 p.m. or later) at Main Campus will take place during regular class hours during finals week unless otherwise arranged with the approval of the Academic Affairs Office.</p>
 
 			</div>
 		);
