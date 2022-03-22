@@ -12,7 +12,7 @@ import {
 const dateFormat = require('dateformat'); //import dateFormat to format dates
 
 export default function save( props ) {
-	const { attributes: { day1, day2, day3, first_label, second_label, quarter } } = props;
+	const { attributes: { day1, day2, day3, first_label, second_label, quarter, quarter_year } } = props;
 	const blockProps = useBlockProps.save();
 
 	const day1Formatted = dateFormat( day1, 'dddd, m/d' );
@@ -39,7 +39,7 @@ export default function save( props ) {
 						<tbody>
 							<tr>
 								<td>6:30 a.m.</td>
-								<td colspan="2"><a href={'#' + quarter}>See note below</a></td>
+								<td colspan="2"><a href={'#' + quarter + quarter_year}>See note below</a></td>
 							</tr>
 							<tr>
 								<td>7:30 a.m.</td>
@@ -146,7 +146,7 @@ export default function save( props ) {
 				</div>
 			</div> {/*end panel panel-primary */}
 
-			<h3 id={quarter}>6:30 a.m. and Evening Classes at Main Campus</h3>
+			<h3 id={quarter + quarter_year}>6:30 a.m. and Evening Classes at Main Campus</h3>
 			<p>Final exams for 6:30 a.m. and Evening credit classes (i.e. start time of 5:00 p.m. or later) at Main Campus will take place during regular class hours during finals week unless otherwise arranged with the approval of the Academic Affairs Office.</p>
 
 		</div>

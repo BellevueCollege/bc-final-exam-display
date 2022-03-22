@@ -35,6 +35,10 @@
     "quarter": {
       "type": "string",
       "default": "spring"
+    },
+    "quarter_year": {
+      "type": "string",
+      "default": "2021"
     }
   },
   "editorScript": "file:./index.js",
