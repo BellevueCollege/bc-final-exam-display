@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "bcfed/block-bc-final-exam-display",
+  "version": "3.0.0",
+  "title": "BC Final Exam Display",
+  "category": "common",
+  "icon": "welcome-learn-more",
+  "description": "Display the final exam schedule for BC students",
+  "supports": {
+      "html": false
+  },
+  "textdomain": "bc-final-exam-display",
+  "attributes": {
+    "day1": {
+      "type": "string",
+      "default": ""
+    },
+    "day2": {
+      "type": "string",
+      "default": ""
+    },
+    "day3": {
+      "type": "string",
+      "default": ""
+    },
+    "first_label": {
+      "type": "string",
+      "default": "<span>If your class meets <strong>Daily</strong>, or <strong>Monday and Wednesday</strong>, or <strong>Monday, Wednesday and Friday</strong>, or <strong>Monday</strong> only, or <strong>Wednesday</strong> only</span>"
+    },
+    "second_label": {
+      "type": "string",
+      "default": "<span>If your class meets <strong>Tuesday and Thursday</strong>, or <strong>Tuesday, Thursday and Friday</strong>, or <strong>Tuesday</strong> only, or <strong>Thursday</strong> only, or <strong>Friday</strong> only</span>"
+    },
+    "quarter": {
+      "type": "string",
+      "default": "spring"
+    },
+    "quarter_year": {
+      "type": "string",
+      "default": "2021"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}
