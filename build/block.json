@@ -8,7 +8,7 @@
   "icon": "welcome-learn-more",
   "description": "Display the final exam schedule for BC students",
   "supports": {
-      "html": false
+    "html": false
   },
   "textdomain": "bc-final-exam-display",
   "attributes": {
