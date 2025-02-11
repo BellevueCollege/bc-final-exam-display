@@ -11,7 +11,7 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 
-const dateFormat = require('dateformat'); //import dateFormat to format dates
+import dateFormat from "dateformat";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 
