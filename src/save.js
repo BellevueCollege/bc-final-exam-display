@@ -9,7 +9,8 @@ import {
 	useBlockProps,
 	RichText,
 } from '@wordpress/block-editor';
-const dateFormat = require('dateformat'); //import dateFormat to format dates
+
+import dateFormat from "dateformat";
 
 export default function save( props ) {
 	const { attributes: { day1, day2, day3, first_label, second_label, quarter, quarter_year } } = props;
