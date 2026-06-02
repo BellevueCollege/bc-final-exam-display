@@ -9,9 +9,19 @@
     "i18n": "grunt i18n"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^29.0.0"
+    "@wordpress/scripts": "^32.2.0"
   },
   "dependencies": {
     "dateformat": "^5.0.3"
+  },
+    "allowScripts": {
+    "esbuild@0.27.7": true,
+    "@parcel/watcher@2.5.6": true,
+    "@nightwatch/nightwatch-inspector": false,
+    "core-js": false,
+    "core-js-pure": false,
+    "unrs-resolver": false,
+    "fsevents@2.3.3": true,
+    "fsevents@2.3.2": true
   }
 }
