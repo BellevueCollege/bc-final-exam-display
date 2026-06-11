@@ -1,9 +1,9 @@
-const {
+import {
 	Button,
 	DatePicker,
 	PanelBody,
 	SelectControl,
-} = wp.components;
+} from '@wordpress/components';
 
 import {
 	useBlockProps,
@@ -13,7 +13,7 @@ import {
 
 import dateFormat from "dateformat";
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
+import { __ } from '@wordpress/i18n'; // Import __() from wp.i18n
 
 import './editor.scss';
 import './style.scss';
