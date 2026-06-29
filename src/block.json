@@ -1,6 +1,6 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 2,
+  "apiVersion": 3,
   "name": "bcfed/block-bc-final-exam-display",
   "version": "3.0.0",
   "title": "BC Final Exam Display",
