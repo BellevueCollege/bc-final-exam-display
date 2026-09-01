@@ -1,6 +1,6 @@
 {
   "name": "bc-final-exam-display",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "author": "Taija Tevia-Clark",
   "scripts": {
     "build": "wp-scripts build",
@@ -9,14 +9,14 @@
     "i18n": "grunt i18n"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^32.2.0"
+    "@wordpress/scripts": "^34.1.0"
   },
   "dependencies": {
     "dateformat": "^5.0.3"
   },
     "allowScripts": {
     "esbuild@0.27.7": true,
-    "@parcel/watcher@2.5.6": true,
+    "@parcel/watcher@2.6.0": true,
     "@nightwatch/nightwatch-inspector": false,
     "core-js": false,
     "core-js-pure": false,
