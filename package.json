@@ -9,7 +9,7 @@
     "i18n": "grunt i18n"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^32.2.0"
+    "@wordpress/scripts": "^35.0.0"
   },
   "dependencies": {
     "dateformat": "^5.0.3"
